@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                    // Zielversion von JavaScript
+    "module": "CommonJS",                  // Modulformat für Node.js
+    "strict": true,                         // Aktiviert strikte Typüberprüfungen
+    "esModuleInterop": true,                // Ermöglicht die Interoperabilität zwischen CommonJS und ES-Modulen
+    "skipLibCheck": true,                   // Überspringt die Typprüfung von deklarationsdateien
+    "forceConsistentCasingInFileNames": true, // Erzwingt konsistente Groß-/Kleinschreibung in Dateinamen
+    "types": ["node"],                      // Typdefinitionen für Node.js
+    "lib": ["ES2020", "DOM"]                // Die zu verwendenden Bibliotheken
+  },
+  "include": ["./**/*"],                  // Die Quelldateien, die vom Compiler berücksichtigt werden
+  "exclude": ["node_modules", "dist"]      // Verzeichnisse, die vom Compiler ausgeschlossen werden
+}
