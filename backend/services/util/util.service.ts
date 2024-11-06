@@ -1,7 +1,9 @@
 import {Role} from "../../interfaces/role.enum";
 
 export const createDate = (daysBefore: number):Date => {
-    let date = new Date("06.11.2024")
+    let date = new Date()
+    date.setDate(date.getDate() - daysBefore)
+    console.log(date);
     return date;
 }
 

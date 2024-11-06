@@ -3,7 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.convertRoleStringToEnum = exports.createDate = void 0;
 const role_enum_1 = require("../../interfaces/role.enum");
 const createDate = (daysBefore) => {
-    let date = new Date("06.11.2024");
+    let date = new Date();
+    date.setDate(date.getDate() - daysBefore);
+    console.log(date);
     return date;
 };
 exports.createDate = createDate;
