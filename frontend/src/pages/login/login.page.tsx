@@ -5,7 +5,7 @@ import {useNavigate} from "react-router";
 const LoginPage: React.FC = () => {
 
     const navigate = useNavigate();
-    const [accessToken, setAccessToken] = useState<string>();
+    const [accessToken, setAccessToken] = useState<{accessToken: string, roleToken: string}>();
     const handleLogin = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -15,7 +15,7 @@ const LoginPage: React.FC = () => {
 
 
         authenticateUser(username, password).then(v => {
-                localStorage.setItem('accessToken', v)
+                localStorage.setItem('roleToken', v.roleToken)
                 setAccessToken(v);
 
         }
@@ -24,7 +24,7 @@ const LoginPage: React.FC = () => {
 
     useEffect(() => {
         if (accessToken){
-            navigate(`/feed/${accessToken}`);
+            navigate(`/feed/${accessToken.accessToken}`);
         }
     }, [accessToken]);
 

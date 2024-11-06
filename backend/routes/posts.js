@@ -8,8 +8,9 @@ const jwt_service_1 = require("../services/jwt/jwt.service");
 const posts_mockdata_1 = require("../mockdata/posts.mockdata");
 let router = express_1.default.Router();
 router.get('/', jwt_service_1.verifyToken, (req, res) => {
-    const user = req.body.user;
-    const posts = posts_mockdata_1.mockPosts.filter(value => value.role == user.role);
+    const user = res.locals.user;
+    const role = res.locals.role;
+    const posts = posts_mockdata_1.mockPosts.filter(value => value.role == role);
     res.status(200).send(posts);
 });
 exports.default = router;

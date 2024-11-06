@@ -11,7 +11,10 @@ router.post('/',(req: Request, res: Response): void => {
     user = usersMockdata.find(u => u.username == user?.username && u.password == u.password);
 
     if (user) {
-        res.status(200).send(generateToken(user, 100000));
+        res.status(200).json({
+            accessToken: generateToken(user),
+            roleToken: generateToken(user.role)
+        });
     } else {
         res.sendStatus(401)
     }

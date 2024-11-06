@@ -6,8 +6,9 @@ import {mockPosts} from "../mockdata/posts.mockdata";
 let router = express.Router();
 
 router.get('/', verifyToken,(req: Request, res: Response): void => {
-    const user = req.body.user as IUser
-    const posts = mockPosts.filter(value => value.role == user.role);
+    const user = res.locals.user as IUser
+    const role = res.locals.role;
+    const posts = mockPosts.filter(value => value.role == role);
 
     res.status(200).send(posts);
 });

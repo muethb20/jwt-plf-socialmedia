@@ -11,7 +11,10 @@ router.post('/', (req, res) => {
     let user = req.body;
     user = users_mockdata_1.usersMockdata.find(u => u.username == (user === null || user === void 0 ? void 0 : user.username) && u.password == u.password);
     if (user) {
-        res.status(200).send((0, jwt_service_1.generateToken)(user, 100000));
+        res.status(200).json({
+            accessToken: (0, jwt_service_1.generateToken)(user),
+            roleToken: (0, jwt_service_1.generateToken)(user.role)
+        });
     }
     else {
         res.sendStatus(401);

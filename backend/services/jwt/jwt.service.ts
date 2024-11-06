@@ -10,30 +10,48 @@ dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET || "SECRET_KEY";
 
-export const generateToken = (payload: IUser, expiresIn: number) => {
-    return jwt.sign(payload, JWT_SECRET, {expiresIn: expiresIn});
+export const generateToken = (payload: any, expiresIn?: number) => {
+    return jwt.sign(payload, JWT_SECRET);
 }
 
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization?.split(" ")[1];
+    try {
+
+    const accessToken = req.headers.authorization?.split(",")[0].split(" ")[1];
+
+    console.log(accessToken)
+    const roleToken = req.headers.authorization?.split(",")[1].split(" ")[1];
+    console.log(roleToken)
 
 
-    if (token) {
-        const accessToken: AccessTokenInterface = jwt.verify(token, JWT_SECRET) as AccessTokenInterface;
+    if (accessToken) {
+        const userToken: AccessTokenInterface = jwt.verify(accessToken, JWT_SECRET) as AccessTokenInterface;
 
         const user: IUser = {
-            username: accessToken.username,
-            password: accessToken.password,
-            id: accessToken.id,
-            email: accessToken.email,
-            role: convertRoleStringToEnum(accessToken.role)
+            username: userToken.username,
+            password: userToken.password,
+            id: userToken.id,
+            email: userToken.email,
+            role: convertRoleStringToEnum(userToken.role)
         }
 
-        req.body.user = user;
+        res.locals.user = user;
 
-        next();
     }
     else{
+        res.status(403).send("Access token does not exist!");
+    }
+
+    if (roleToken) {
+        res.locals.role = jwt.verify(roleToken, JWT_SECRET);
+    } else {
+        res.status(403).send("Role token does not exist!")
+    }
+    } catch (error) {
         res.sendStatus(403);
     }
+
+
+    next();
+
 }

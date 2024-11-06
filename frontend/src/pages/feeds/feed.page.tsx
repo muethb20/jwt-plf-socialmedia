@@ -14,7 +14,8 @@ const FeedPage: React.FC = () => {
 
     useEffect(() => {
         setUser(getUserFromToken(params.accessToken || ""));
-        getPosts(params.accessToken || "").then(result => setPosts(result));
+        const roleToken = localStorage.getItem('roleToken');
+        getPosts({accessToken: params.accessToken || "", roleToken: roleToken || ""}).then(result => setPosts(result));
     }, []);
 
     return (
